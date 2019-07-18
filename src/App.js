@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css'
 import 'font-awesome/css/font-awesome.css'
 /*
@@ -26,7 +26,7 @@ const project = [
             }
         ],
         body: `
-        if(count === 0) return 1
+        if(count <= 1) return count
         return fib(count-1) + fib(count-2)
         `
     },
@@ -36,14 +36,16 @@ const project = [
         target:fibId,
         tests: [
             {
-                params:[5],
+                params:[6],
                 answer:[8],
+                actual:[],
                 correct:true,
             },
             {
-                params:[6],
+                params:[7],
                 answer:[12],
-                correct:false,
+                actual:[],
+                correct:true,
             }
         ]
     }
@@ -55,12 +57,55 @@ project.forEach(item => {
     }
 })
 
+
+class ProcessorSystem {
+
+    constructor() {
+        this.listeners = {
+            changed:[]
+        }
+    }
+
+    process(fun) {
+        const realfun = project[0]
+        const parms = realfun.params.map(p => p.name)
+        const body = `
+        function ${realfun.name} (${parms}) { 
+            ${realfun.body} 
+        }
+        return ${realfun.name}
+        `;
+        console.log(body)
+        const ffun = new Function(...parms,body)()
+
+        const unit = project[1]
+
+        unit.tests.forEach(test => {
+            console.log("running test",test,test.params)
+            const res = ffun.call(null,test.params)
+            console.log("result",res)
+            test.actual[0] = res
+            test.correct = test.answer[0] === test.actual[0]
+        })
+        this.fireChanged()
+    }
+
+    fireChanged() {
+        this.listeners['changed'].forEach(cb => cb(project))
+    }
+    addEventListener(type,cb) {
+        this.listeners['changed'].push(cb)
+    }
+}
+
+const Processor = new ProcessorSystem()
+
 const CanvasView = (props) => {
     return <div className={"canvas"}>{props.children}</div>
 }
 const FunView = (props) => {
     const params = props.fun.params.map(par => {
-        return <span className="param"><i>{par.type}</i><b>{par.name}</b></span>
+        return <span className="param" key={par.name}><i>{par.type}</i><b>{par.name}</b></span>
     })
     return <div className="function window">
         <div className="signature">
@@ -80,17 +125,19 @@ const TestsView = (props) => {
             <div className="test-headers">
                 <header>parameters</header>
                 <header>answer</header>
+                <header>actual</header>
             </div>
-            {props.fun.tests.map(test => {
-                return <div className="test">
+            {props.fun.tests.map((test,i) => {
+                return <div className="test" key={i}>
                     <span className="params">{test.params}</span>
-                    <span className={`answer ${test.correct?"correct":"incorrect"}`}>{test.answer}</span>
+                    <span className={`answer`}>{test.answer}</span>
+                    <span className={`actual ${test.correct?"correct":"incorrect"}`}>{test.actual}</span>
                 </div>
             })}
         </div>
         <div className="spacer"></div>
         <footer>
-            <button className="fa fa-play"></button>
+            <button className="fa fa-play" onClick={()=>Processor.process(props.fun)}></button>
             <div className="spacer"></div>
             <button className="fa fa-arrows-alt"></button>
         </footer>
@@ -103,14 +150,28 @@ const Menu = (props) => {
     </div>
 }
 
-function App() {
-  return (
-      <CanvasView project={project}>
-          <Menu/>
-          <FunView fun={project[0]}/>
-          <TestsView fun={project[1]}/>
-      </CanvasView>
-  );
+class App extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            project:project
+        }
+        Processor.addEventListener('changed',(project)=>{
+            console.log("updating state")
+            this.setState({project:project})
+        })
+    }
+
+    render() {
+        const project = this.state.project
+        return (
+            <CanvasView project={project}>
+                <Menu/>
+                <FunView fun={project[0]}/>
+                <TestsView fun={project[1]}/>
+            </CanvasView>
+        )
+    }
 }
 
 export default App;
