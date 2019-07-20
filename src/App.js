@@ -5,14 +5,7 @@ import {CommentDocView} from './Comments'
 import {TestsView} from './Tests'
 import {FunView} from './FunctionView'
 import {ProcessorSystem} from './CodeProcessor'
-/*
-* Editor for function sig. name, then comma separated args
-* Editor for function body
-* Unit test grid. Fixed size. button to run all tests. Show results.
-* implement fib with tests
-* implement Roman numeral demo
-
- */
+import {ConstantsView} from './ConstantsView'
 
 const genId = (str) => str + Math.floor(Math.random()*100000)
 
@@ -101,44 +94,10 @@ const project = [
     }
 ]
 
-project.forEach(item => {
-    if(item.type === 'function') {
-        // item.body = item.body.split("\n").map(line => line.trim()).join("\n")
-    }
-})
-
-
 const Processor = new ProcessorSystem(project)
 
 const CanvasView = (props) => {
     return <div className={"canvas"}>{props.children}</div>
-}
-
-const ConstantsView = (props) => {
-    return <div className="constants window" style={{
-        left:props.fun.position.x+"px",
-        top:props.fun.position.y+"px",
-    }}>
-        <div className="title">constants</div>
-
-        {props.fun.consts.map((test,i) => {
-            return <div className="const" key={i}>
-                <span className="constant-name">{test.name}</span>
-                <span className="constant-type">{test.type}</span>
-                <ConstantEditorView cons={test}/>
-            </div>
-        })}
-    </div>
-}
-
-const ConstantEditorView = (props) => {
-    return <span className="constant-value"
-                 onClick={()=>{
-                     console.log("going to edit")
-                 }}
-    >
-        {props.cons.value}
-    </span>
 }
 
 const Menu = (props) => {
