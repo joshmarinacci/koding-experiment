@@ -7,8 +7,7 @@ import {FunView} from './FunctionView'
 import {ProcessorSystem} from './CodeProcessor'
 import {ConstantsView} from './ConstantsView'
 import {ProjectEditor} from './ProjectEditor'
-
-const genId = (str) => str + Math.floor(Math.random()*100000)
+import {genId} from './utils'
 
 const fibId = genId("fib")
 
@@ -126,7 +125,7 @@ const Menu = (props) => {
     return <div className="menu">
         <button>save</button>
         <button>new function</button>
-        <button>new comment</button>
+        <button onClick={()=>ed.addNewComment()}>new comment</button>
     </div>
 }
 

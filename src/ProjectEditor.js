@@ -1,3 +1,5 @@
+import {genId} from './utils'
+
 export class ProjectEditor {
     constructor(project) {
         this.project = project
@@ -26,5 +28,19 @@ export class ProjectEditor {
 
     fireChange() {
         this.listeners.changed.forEach(cb => cb(this.project))
+    }
+
+    addNewComment() {
+        this.project.push({
+            position: {
+                x: 100,
+                y: 100,
+            },
+            id:genId("comment"),
+            type:'comment',
+            name:'new comment',
+            body: `This is a new blank comment. Click to edit.`
+        })
+        this.fireChange()
     }
 }
