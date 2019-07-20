@@ -139,6 +139,9 @@ class App extends Component {
         Processor.addEventListener('changed',(project)=>{
             this.setState({project:project})
         })
+        ed.addEventListener('changed',(project)=>{
+            this.setState({project:project})
+        })
     }
 
     render() {
@@ -155,7 +158,7 @@ class App extends Component {
     }
     renderChunk(p) {
         if(p.type === 'function') return <FunView fun={p} key={p.id}/>
-        if(p.type === 'tests') return <TestsView fun={p} key={p.id} processor={Processor}/>
+        if(p.type === 'tests') return <TestsView fun={p} key={p.id} processor={Processor} editor={ed}/>
         if(p.type === 'constants') return <ConstantsView fun={p} editor={ed}/>
         if(p.type === 'comment') return <CommentDocView fun={p}/>
 
