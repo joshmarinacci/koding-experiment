@@ -30,6 +30,7 @@ body {
   border: 1px solid var(--function-color-border);
   left: 100px;
   top: 100px;
+  background-color: white;
 }
 
 .function .title {

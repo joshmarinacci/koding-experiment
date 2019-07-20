@@ -124,7 +124,7 @@ const CanvasView = (props) => {
 const Menu = (props) => {
     return <div className="menu">
         <button>save</button>
-        <button>new function</button>
+        <button onClick={()=>ed.addNewFunction()}>new function</button>
         <button onClick={()=>ed.addNewComment()}>new comment</button>
     </div>
 }

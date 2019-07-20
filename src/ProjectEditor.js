@@ -43,4 +43,19 @@ export class ProjectEditor {
         })
         this.fireChange()
     }
+
+    addNewFunction() {
+        this.project.push({
+            position: {
+                x: 100,
+                y: 100,
+            },
+            id:genId("function"),
+            type:'function',
+            name:'newFunName',
+            params: [],
+            body: `console.log("running");`
+        })
+        this.fireChange()
+    }
 }
