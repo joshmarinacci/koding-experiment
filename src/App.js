@@ -6,6 +6,7 @@ import {TestsView} from './Tests'
 import {FunView} from './FunctionView'
 import {ProcessorSystem} from './CodeProcessor'
 import {ConstantsView} from './ConstantsView'
+import {ProjectEditor} from './ProjectEditor'
 
 const genId = (str) => str + Math.floor(Math.random()*100000)
 
@@ -19,7 +20,7 @@ const project = [
         },
         id:fibId,
         type:'function',
-        name:'fib',
+        name:'grav',
         params: [
             {
                 type:'number',
@@ -27,11 +28,11 @@ const project = [
             }
         ],
         body: `
-        return scope.firstname 
-            + " can jump "
-            + scope.gravity * seconds
-            + " feet on earth";
-        `
+return scope.firstname 
+    + " can jump "
+    + scope.gravity * seconds
+    + " feet on earth";
+`
     },
     {
         position: {
@@ -43,14 +44,14 @@ const project = [
         target:fibId,
         tests: [
             {
-                params:[6],
-                answer:[8],
+                params:[1],
+                answer:[],
                 actual:[],
                 correct:true,
             },
             {
-                params:[7],
-                answer:[12],
+                params:[2],
+                answer:[],
                 actual:[],
                 correct:true,
             }
@@ -95,6 +96,7 @@ const project = [
 ]
 
 const Processor = new ProcessorSystem(project)
+const ed = new ProjectEditor(project)
 
 const CanvasView = (props) => {
     return <div className={"canvas"}>{props.children}</div>
@@ -126,7 +128,7 @@ class App extends Component {
                 <Menu/>
                 <FunView fun={project[0]}/>
                 <TestsView fun={project[1]} processor={Processor}/>
-                <ConstantsView fun={project[2]}/>
+                <ConstantsView fun={project[2]} editor={ed}/>
                 <CommentDocView fun={project[3]}/>
             </CanvasView>
         )

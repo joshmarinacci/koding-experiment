@@ -22,6 +22,7 @@ export const TestsView = (props) => {
         </div>
         <div className="spacer"></div>
         <footer>
+            <button className="fa fa-plus"></button>
             <button className="fa fa-play" onClick={()=>props.processor.process(props.fun)}></button>
             <div className="spacer"></div>
             <button className="fa fa-arrows-alt"></button>

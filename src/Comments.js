@@ -7,6 +7,13 @@ export const CommentDocView = (props) => {
     }}>
         <div className="title">doc</div>
         <div className="body">{props.fun.body}</div>
+
+        <div className="spacer"></div>
+
+        <footer>
+            <div className="spacer"></div>
+            <button className="fa fa-arrows-alt"></button>
+        </footer>
     </div>
 }
 

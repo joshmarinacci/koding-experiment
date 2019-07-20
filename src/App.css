@@ -54,7 +54,7 @@ body {
 .function .body {
   font-family: monospace;
   font-size: 10pt;
-  white-space: pre-line;
+  white-space: pre;
 }
 
 
@@ -69,11 +69,11 @@ body {
   flex-direction: column;
 }
 
-.tests .spacer {
+.spacer {
   flex: 1.0;
 }
 
-.tests footer {
+footer {
   display: flex;
   flex-direction: row;
 }
@@ -124,6 +124,8 @@ body {
 .constants {
   background-color: var(--constants-color);
   border: 1px solid var(--constants-color-border);
+  display: flex;
+  flex-direction: column;
 }
 
 .constants .title {
@@ -132,7 +134,7 @@ body {
 }
 
 .constants .const {
-  padding: 1em;
+  margin: 1em 0em;
 }
 
 .constants .constant-name {
@@ -158,6 +160,8 @@ body {
 .comment {
   background-color: var(--comment-color);
   border: 1px solid var(--comment-color-border);
+  display: flex;
+  flex-direction: column;
 }
 .comment .title {
   background-color: var(--comment-color-border);
