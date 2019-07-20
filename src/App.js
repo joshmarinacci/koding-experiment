@@ -26,12 +26,14 @@ const project = [
         params: [
             {
                 type:'number',
-                name:'count'
+                name:'seconds'
             }
         ],
         body: `
-        if(count <= 1) return count
-        return fib(count-1) + fib(count-2)
+        return firstname 
+            + " can jump "
+            + gravity * seconds
+            + " feet on earth";
         `
     },
     {
@@ -200,6 +202,14 @@ const ConstantsView = (props) => {
         top:props.fun.position.y+"px",
     }}>
         <div className="title">constants</div>
+
+        {props.fun.consts.map((test,i) => {
+            return <div className="const" key={i}>
+                <span className="constant-name">{test.name}</span>
+                <span className="constant-type">{test.type}</span>
+                <span className="constant-value">{test.value}</span>
+            </div>
+        })}
     </div>
 }
 
@@ -209,6 +219,7 @@ const CommentDocView = (props) => {
         top:props.fun.position.y+"px",
     }}>
         <div className="title">doc</div>
+        <div className="body">{props.fun.body}</div>
     </div>
 }
 

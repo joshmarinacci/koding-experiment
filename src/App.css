@@ -2,11 +2,11 @@ body {
   --test-color: #80ff85;
   --test-color-border: #6cd76c;
 
-  --constants-color: red;
-  --constants-color-border: darkred;
+  --constants-color: #ff9e9e;
+  --constants-color-border: #e46b68;
 
   --comment-color: lightblue;
-  --comment-color-border: blue;
+  --comment-color-border: #8080ff;
 }
 .canvas {
   border: 0px solid red;
@@ -131,6 +131,29 @@ body {
   color: white;
 }
 
+.constants .const {
+  padding: 1em;
+}
+
+.constants .constant-name {
+  padding: 0.25em 0.5em;
+  margin: 0.25em;
+  color: white;
+  background-color: var(--constants-color-border);
+  border-radius: 1.0em;
+}
+
+.constants .constant-type {
+  display: none;
+}
+
+.constants .constant-value {
+  padding: 0.25em 1.0em;
+  background-color: white;
+  border-radius: 1.0em;
+}
+
+
 
 .comment {
   background-color: var(--comment-color);
@@ -139,4 +162,7 @@ body {
 .comment .title {
   background-color: var(--comment-color-border);
   color: white;
+}
+.comment .body {
+  padding: 0.25em;
 }
