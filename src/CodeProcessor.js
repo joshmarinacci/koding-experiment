@@ -8,26 +8,35 @@ export class ProcessorSystem {
     }
 
     process(fun) {
-        const project = this.project
-        const consts = project[2].consts
-        const realfun = project[0]
-        const parms = realfun.params.map(p => p.name)
-        const body = `
-        const scope = {
-            ${consts.map(c => c.name+":"+c.value).join(",\n")}
-        }
-        function ${realfun.name} (${parms}) { 
-            ${realfun.body} 
-        }
-        scope.${realfun.name} = ${realfun.name}
-        return scope;
-        `;
+        const consts = this.project.find(p => p.type === 'constants').consts
+        console.log("found",consts)
+        const funs = this.project.filter(p => p.type === 'function')
+        const defs = []
+        consts.forEach(c => {
+            defs.push({name:c.name, value:c.value})
+        })
+        funs.forEach(realfun => {
+            const parms = realfun.params.map(p => p.name)
+            console.log("looking at realfun",realfun)
+            defs.push({
+                name:realfun.name,
+                value:`function(${parms}){
+                    ${realfun.body}
+                }`})
+        })
+        const body = `const scope = { 
+${defs.map(d => d.name+":"+d.value).join(",\n    ")}
+}
+return scope;
+`
         console.log(body)
-        const scope = new Function(...parms,body)()
+        const scope = new Function(body)()
+        console.log(scope)
 
-        const unit = project[1]
+        const unit = this.project.find(p => p.type === 'tests')
 
         try {
+            const realfun = this.project.find(p => p.id === unit.target)
             unit.tests.forEach(test => {
                 console.log("running test", test, test.params)
                 const res = scope[realfun.name].call(null, test.params)

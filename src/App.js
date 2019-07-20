@@ -24,15 +24,35 @@ const project = [
         params: [
             {
                 type:'number',
-                name:'seconds'
+                name:'height'
+            }
+        ],//d = 1/2 at^2,  d/a * 2 = t^2,  sqrt(2d/a)
+        body: `
+const time = 
+ Math.sqrt(2*height/
+   scope.gravity)
+        
+return scope.firstname 
+    + " will fall for "
+    + scope.format(time)
+    + " seconds";
+`
+    },
+    {
+        position: {
+            x:30,
+            y:670,
+        },
+        id:genId("format"),
+        type:'function',
+        name:'format',
+        params: [
+            {
+                type:'number',
+                name:'value'
             }
         ],
-        body: `
-return scope.firstname 
-    + " can jump "
-    + scope.gravity * seconds
-    + " feet on earth";
-`
+        body: `return value.toFixed(2)`
     },
     {
         position: {
@@ -123,16 +143,24 @@ class App extends Component {
 
     render() {
         const project = this.state.project
+
         return (
             <CanvasView project={project}>
                 <Menu/>
-                <FunView fun={project[0]}/>
-                <TestsView fun={project[1]} processor={Processor}/>
-                <ConstantsView fun={project[2]} editor={ed}/>
-                <CommentDocView fun={project[3]}/>
+                {
+                    project.map(p => this.renderChunk(p))
+                }
             </CanvasView>
         )
     }
+    renderChunk(p) {
+        if(p.type === 'function') return <FunView fun={p} key={p.id}/>
+        if(p.type === 'tests') return <TestsView fun={p} key={p.id} processor={Processor}/>
+        if(p.type === 'constants') return <ConstantsView fun={p} editor={ed}/>
+        if(p.type === 'comment') return <CommentDocView fun={p}/>
+
+    }
+
 }
 
 export default App;
