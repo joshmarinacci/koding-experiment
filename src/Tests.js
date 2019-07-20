@@ -2,15 +2,15 @@ import React from 'react'
 import {DraggableWindow} from './DraggableWindow'
 
 
-export const TestsView = (props) => {
-    return <DraggableWindow fun={props.fun} editor={props.editor} title={"tests"}>
+export const TestsView = ({fun,editor, processor}) => {
+    return <DraggableWindow fun={fun} editor={editor} title="tests" type="tests">
         <div className="tests-grid">
             <div className="test-headers">
                 <header>parameters</header>
                 <header>answer</header>
                 <header>actual</header>
             </div>
-            {props.fun.tests.map((test, i) => {
+            {fun.tests.map((test, i) => {
                 return <div className="test" key={i}>
                     <span className="params">{test.params}</span>
                     <span className={`answer`}>{test.answer}</span>
@@ -21,7 +21,7 @@ export const TestsView = (props) => {
         <div className="spacer"></div>
         <footer>
             <button className="fa fa-plus"></button>
-            <button className="fa fa-play" onClick={() => props.processor.process(props.fun)}></button>
+            <button className="fa fa-play" onClick={() => processor.process(fun)}></button>
             <div className="spacer"></div>
             <button className="fa fa-arrows-alt"></button>
         </footer>

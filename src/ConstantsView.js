@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
+import {DraggableWindow} from './DraggableWindow'
 
-export const ConstantsView = (props) => {
-    return <div className="constants window" style={{
-        left:props.fun.position.x+"px",
-        top:props.fun.position.y+"px",
-    }}>
-        <div className="title">constants</div>
-
-        {props.fun.consts.map((test,i) => {
-            let ed = <ConstantEditorView cons={test} editor={props.editor}/>
-            if(test.type === 'number') ed = <ConstantNumberEditorView cons={test} editor={props.editor}/>
+export const ConstantsView = ({fun, editor}) => {
+    return <DraggableWindow title={'constants'} type={'constants'} fun={fun} editor={editor}>
+        {fun.consts.map((test,i) => {
+            let ed = <ConstantEditorView cons={test} editor={editor}/>
+            if(test.type === 'number') ed = <ConstantNumberEditorView cons={test} editor={editor}/>
             return <div className="const" key={i}>
                 <span className="constant-name">{test.name}</span>
                 <span className="constant-type">{test.type}</span>
@@ -17,19 +13,19 @@ export const ConstantsView = (props) => {
             </div>
         })}
 
-        <div className="spacer"></div>
+        <div className="spacer"/>
 
         <footer>
-            <button className="fa fa-plus"></button>
-            <div className="spacer"></div>
-            <button className="fa fa-arrows-alt"></button>
+            <button className="fa fa-plus"/>
+            <div className="spacer"/>
+            <button className="fa fa-arrows-alt"/>
         </footer>
-    </div>
+    </DraggableWindow>
 }
 
-const ConstantEditorView = (props) => {
+const ConstantEditorView = ({cons, editor}) => {
     const [editing, setEditing] = useState(false)
-    const [value, setValue] = useState(props.cons.value)
+    const [value, setValue] = useState(cons.value)
     if(editing) {
         return <input className="constant-value"
                       value={value}
@@ -39,25 +35,20 @@ const ConstantEditorView = (props) => {
                       onKeyDown={(e)=>{
                           if(e.key === 'Enter') {
                               setEditing(false)
-                              props.editor.editConstant(props.cons,`"${value}"`)
+                              editor.editConstant(cons,`"${value}"`)
                           }
                       }}
         />
     }
-    return <span className="constant-value"
-                 onClick={()=>{
-                     console.log("going to edit")
-                     setEditing(true)
-                 }}
-    >
-        {props.cons.value}
+    return <span className="constant-value" onClick={()=> setEditing(true)}>
+        {cons.value}
     </span>
 }
 
 
-const ConstantNumberEditorView = (props) => {
+const ConstantNumberEditorView = ({cons, editor}) => {
     const [editing, setEditing] = useState(false)
-    const [value, setValue] = useState(props.cons.value)
+    const [value, setValue] = useState(cons.value)
     if(editing) {
         return <input className="constant-value"
                       type="number"
@@ -66,13 +57,11 @@ const ConstantNumberEditorView = (props) => {
                       onKeyDown={e=>{
                           if(e.key === 'Enter') {
                               setEditing(false)
-                              props.editor.editConstant(props.cons,value)
+                              editor.editConstant(cons,value)
                           }
                       }}
         />
     }
-    return <span className="constant-value" onClick={()=>setEditing(true)}>
-        {props.cons.value}
-    </span>
+    return <span className="constant-value" onClick={()=>setEditing(true)}> {cons.value} </span>
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const DraggableWindow = ({fun, editor, children, title}) => {
-    return <div className="tests window" style={{
+export const DraggableWindow = ({fun, editor, children, title,type}) => {
+    return <div className={type + " window"} style={{
         left: fun.position.x + "px",
         top: fun.position.y + "px"
     }}>
