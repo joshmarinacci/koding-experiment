@@ -2,6 +2,11 @@ body {
   --test-color: #80ff85;
   --test-color-border: #6cd76c;
 
+  --constants-color: red;
+  --constants-color-border: darkred;
+
+  --comment-color: lightblue;
+  --comment-color-border: blue;
 }
 .canvas {
   border: 0px solid red;
@@ -74,10 +79,15 @@ body {
 }
 
 
+.title {
+  /*background-color: var(--test-color-border);*/
+  /*color: black;*/
+  padding: 0.25em;
+}
+
 .tests .title {
   background-color: var(--test-color-border);
   color: black;
-  padding: 0.25em;
 }
 
 .tests-grid {
@@ -107,5 +117,26 @@ body {
 
 .tests-grid .test .incorrect {
   background-color: red;
+  color: white;
+}
+
+
+.constants {
+  background-color: var(--constants-color);
+  border: 1px solid var(--constants-color-border);
+}
+
+.constants .title {
+  background-color: var(--constants-color-border);
+  color: white;
+}
+
+
+.comment {
+  background-color: var(--comment-color);
+  border: 1px solid var(--comment-color-border);
+}
+.comment .title {
+  background-color: var(--comment-color-border);
   color: white;
 }

@@ -16,6 +16,10 @@ const fibId = genId("fib")
 
 const project = [
     {
+        position: {
+            x: 30,
+            y: 40,
+        },
         id:fibId,
         type:'function',
         name:'fib',
@@ -31,6 +35,10 @@ const project = [
         `
     },
     {
+        position: {
+            x: 350,
+            y: 40,
+        },
         id:genId("tests"),
         type:'tests',
         target:fibId,
@@ -48,6 +56,42 @@ const project = [
                 correct:true,
             }
         ]
+    },
+    {
+        position: {
+            x: 30,
+            y: 355,
+        },
+        id:'constants',
+        type:'constants',
+        name:'global constants',
+        consts:[
+            {
+                id:genId('const'),
+                name:'gravity',
+                type:'number',
+                value:9.8
+            },
+            {
+                id:genId("const"),
+                name:'firstname',
+                type:'string',
+                value:'Alice'
+            }
+        ]
+    },
+    {
+        position: {
+            x: 350,
+            y: 355,
+        },
+        id:genId("comment"),
+        type:'comment',
+        name:'comment',
+        body: `
+            This is a comment used for general documentation. It is associated
+            with a function, but is not included in compiled code.
+        `
     }
 ]
 
@@ -107,7 +151,10 @@ const FunView = (props) => {
     const params = props.fun.params.map(par => {
         return <span className="param" key={par.name}><i>{par.type}</i><b>{par.name}</b></span>
     })
-    return <div className="function window">
+    return <div className="function window" style={{
+        left:props.fun.position.x+"px",
+        top:props.fun.position.y+"px",
+    }}>
         <div className="signature">
             <span className="name">{props.fun.name}</span>
             {params}
@@ -119,7 +166,10 @@ const FunView = (props) => {
 }
 
 const TestsView = (props) => {
-    return <div className="tests window">
+    return <div className="tests window" style={{
+        left:props.fun.position.x+"px",
+        top:props.fun.position.y+"px",
+    }}>
         <div className="title">tests</div>
         <div className="tests-grid">
             <div className="test-headers">
@@ -144,9 +194,29 @@ const TestsView = (props) => {
     </div>
 }
 
+const ConstantsView = (props) => {
+    return <div className="constants window" style={{
+        left:props.fun.position.x+"px",
+        top:props.fun.position.y+"px",
+    }}>
+        <div className="title">constants</div>
+    </div>
+}
+
+const CommentDocView = (props) => {
+    return <div className="comment window" style={{
+        left:props.fun.position.x+"px",
+        top:props.fun.position.y+"px",
+    }}>
+        <div className="title">doc</div>
+    </div>
+}
+
 const Menu = (props) => {
     return <div className="menu">
         <button>save</button>
+        <button>new function</button>
+        <button>new comment</button>
     </div>
 }
 
@@ -169,6 +239,8 @@ class App extends Component {
                 <Menu/>
                 <FunView fun={project[0]}/>
                 <TestsView fun={project[1]}/>
+                <ConstantsView fun={project[2]}/>
+                <CommentDocView fun={project[3]}/>
             </CanvasView>
         )
     }
