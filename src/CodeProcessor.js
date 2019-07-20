@@ -29,7 +29,8 @@ ${defs.map(d => d.name+":"+d.value).join(",\n    ")}
 }
 return scope;
 `
-        console.log(body)
+
+        console.log(`-------\n${body}\n---------`)
         const scope = new Function(body)()
         console.log(scope)
 
