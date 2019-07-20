@@ -7,6 +7,9 @@ body {
 
   --comment-color: lightblue;
   --comment-color-border: #8080ff;
+
+  --function-color: gray;
+  --function-color-border: #333;
 }
 .canvas {
   border: 0px solid red;
@@ -24,13 +27,17 @@ body {
 }
 
 .function {
-  border: 1px solid black;
+  border: 1px solid var(--function-color-border);
   left: 100px;
   top: 100px;
 }
 
+.function .title {
+  background-color: var(--function-color-border);
+  color: white;
+}
+
 .function .signature {
-  border: 1px solid black;
   padding: 0.5rem;
   background-color: black;
   color: white;

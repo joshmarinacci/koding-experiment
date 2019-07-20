@@ -3,7 +3,7 @@ import {DraggableWindow} from './DraggableWindow'
 
 
 export const TestsView = ({fun,editor, processor}) => {
-    return <DraggableWindow fun={fun} editor={editor} title="tests" type="tests">
+    return <DraggableWindow fun={fun} editor={editor} title={"tests for " + fun.target} type="tests">
         <div className="tests-grid">
             <div className="test-headers">
                 <header>parameters</header>
@@ -18,12 +18,12 @@ export const TestsView = ({fun,editor, processor}) => {
                 </div>
             })}
         </div>
-        <div className="spacer"></div>
+        <div className="spacer"/>
         <footer>
-            <button className="fa fa-plus"></button>
-            <button className="fa fa-play" onClick={() => processor.process(fun)}></button>
-            <div className="spacer"></div>
-            <button className="fa fa-arrows-alt"></button>
+            <button className="fa fa-plus"/>
+            <button className="fa fa-play" onClick={() => processor.process(fun)}/>
+            <div className="spacer"/>
+            <button className="fa fa-arrows-alt"/>
         </footer>
     </DraggableWindow>
 }

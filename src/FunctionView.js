@@ -1,19 +1,17 @@
 import React from 'react';
+import {DraggableWindow} from './DraggableWindow'
 
-export const FunView = (props) => {
-    const params = props.fun.params.map(par => {
+export const FunView = ({fun,editor}) => {
+    const params = fun.params.map(par => {
         return <span className="param" key={par.name}><i>{par.type}</i><b>{par.name}</b></span>
     })
-    return <div className="function window" style={{
-        left:props.fun.position.x+"px",
-        top:props.fun.position.y+"px",
-    }}>
+    return <DraggableWindow type="function" fun={fun} title={fun.name} editor={editor}>
         <div className="signature">
-            <span className="name">{props.fun.name}</span>
+            <span className="name">{fun.name}</span>
             {params}
         </div>
         <div className="body">
-            {props.fun.body}
+            {fun.body}
         </div>
-    </div>
+    </DraggableWindow>
 }
