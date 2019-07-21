@@ -88,9 +88,7 @@ footer {
 
 
 .title {
-  /*background-color: var(--test-color-border);*/
-  /*color: black;*/
-  padding: 0.25em;
+   padding: 0.25em;
 }
 
 .tests .title {
@@ -114,12 +112,22 @@ footer {
   background-color: var(--test-color);
   color: black;
 }
+.tests-grid .test-headers button {
+  display: table-cell;
+  padding:0;
+  margin:0;
+}
 
 .tests-grid .test span {
   border: 1px solid var(--test-color);
   background-color: white;
   padding: 0.25em 0.5em;
   display: table-cell;
+}
+
+.tests-grid .test button {
+  display: table-cell;
+  margin:0;
 }
 
 

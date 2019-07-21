@@ -7,7 +7,7 @@ export class ProcessorSystem {
         this.project = project
     }
 
-    process(fun) {
+    generateCode() {
         const consts = this.project.find(p => p.type === 'constants').consts
         console.log("found",consts)
         const funs = this.project.filter(p => p.type === 'function')
@@ -33,9 +33,29 @@ return scope;
         console.log(`-------\n${body}\n---------`)
         const scope = new Function(body)()
         console.log(scope)
+        return scope
+    }
 
-        const unit = this.project.find(p => p.type === 'tests')
+    processSingleTest(test,unit) {
+        console.log("running",test)
+        const scope = this.generateCode()
+        try {
+            const fun = this.project.find(p => p.id === unit.target)
+            console.log("run test",test,test.params)
+            const res = scope[fun.name].call(null, test.params)
+            console.log("result",res)
+            test.actual[0] = res
+            test.correct = test.answer[0] === test.actual[0]
+            this.fireChanged()
+        } catch(e) {
+            console.error(e)
 
+        }
+    }
+
+    process(fun) {
+        const scope = this.generateCode()
+        const unit = this.project.find(p => p.id === fun.id)
         try {
             const realfun = this.project.find(p => p.id === unit.target)
             unit.tests.forEach(test => {
