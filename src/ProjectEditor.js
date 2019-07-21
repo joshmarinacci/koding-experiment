@@ -35,6 +35,11 @@ export class ProjectEditor {
         this.fireChange()
     }
 
+    setTestsTarget(tests, target) {
+        tests.target = target
+        this.fireChange()
+    }
+
 
     fireChange() {
         this.listeners.changed.forEach(cb => cb(this.project))

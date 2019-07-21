@@ -6,7 +6,7 @@ export const FunView = ({fun,editor}) => {
     const params = fun.params.map(par => {
         return <span className="param" key={par.name}><b>{par.name}</b></span>
     })
-    return <DraggableWindow type="function" fun={fun} title={fun.name + " " + fun.id} editor={editor}>
+    return <DraggableWindow type="function" fun={fun} title={fun.name} editor={editor}>
         <div className="signature">
             <span className="name">{fun.name}</span>
             ({params})

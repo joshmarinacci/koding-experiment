@@ -188,7 +188,7 @@ class App extends Component {
     }
     renderChunk(p) {
         if(p.type === 'function') return <FunView fun={p} key={p.id} editor={ed}/>
-        if(p.type === 'tests') return <TestsView fun={p} key={p.id} processor={Processor} editor={ed}/>
+        if(p.type === 'tests') return <TestsView fun={p} key={p.id} processor={Processor} editor={ed} project={project}/>
         if(p.type === 'constants') return <ConstantsView fun={p} key={p.id} editor={ed}/>
         if(p.type === 'comment') return <CommentDocView fun={p} key={p.id} editor={ed}/>
         if(p.type === 'canvas') return <CanvasView fun={p} key={p.id} editor={ed}/>

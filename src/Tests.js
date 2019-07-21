@@ -1,9 +1,19 @@
 import React from 'react'
 import {DraggableWindow} from './DraggableWindow'
 
+const FunctionChooser = ({fun,project, target, editor}) => {
+    const funs = project.filter(p => p.type === 'function')
+            .map(fun => {
+                return <option key={fun.id} value={fun.id}>{fun.name}</option>
+            })
+    return <select value={target}
+                   onChange={(e)=>editor.setTestsTarget(fun,e.target.value)}
+    >{funs}</select>
+}
 
-export const TestsView = ({fun,editor, processor}) => {
-    return <DraggableWindow fun={fun} editor={editor} title={"tests for " + fun.target} type="tests">
+export const TestsView = ({fun, editor, processor, project}) => {
+    const title = <span> test <FunctionChooser fun={fun} project={project} target={fun.target} editor={editor}/></span>
+    return <DraggableWindow fun={fun} editor={editor} title={title} type="tests">
         <div className="tests-grid">
             <div className="test-headers">
                 <span></span>
