@@ -48,7 +48,7 @@ return scope;
         try {
             const fun = this.project.find(p => p.id === unit.target)
             console.log("run test",test,test.params)
-            const res = scope[fun.name].call(null, test.params)
+            const res = scope[fun.name].apply(null, test.params)
             console.log("result",res)
             test.actual[0] = res
             test.correct = test.answer[0] === test.actual[0]

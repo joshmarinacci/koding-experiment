@@ -14,7 +14,7 @@ export const TestsView = ({fun,editor, processor}) => {
             {fun.tests.map((test, i) => {
                 return <div className="test" key={i}>
                     <button className="fa fa-play" onClick={() => processor.processSingleTest(test,fun)}/>
-                    <span className="params">{test.params}</span>
+                    <span className="params">{test.params.join(",")}</span>
                     <span className={`answer`}>{test.answer}</span>
                     <span className={`actual ${test.correct ? "correct" : "incorrect"}`}>{test.actual}</span>
                 </div>

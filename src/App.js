@@ -20,19 +20,35 @@ const project = [
         },
         id:fibId,
         type:'function',
-        name:'grav',
+        name:'drawBall',
         params: [
             {
                 type:'number',
-                name:'height'
+                name:'x'
+            },
+            {
+                type:'number',
+                name:'y',
+            },
+            {
+                type:'string',
+                name:'state'
             }
-        ],//d = 1/2 at^2,  d/a * 2 = t^2,  sqrt(2d/a)
+        ],
         body: `
+scope.clearCanvas()
+console.log('xy is',x,y,state);
 const ctx = scope.canvas1.getContext('2d')
 ctx.fillStyle = 'white'
 ctx.fillRect(0,0,scope.canvas1.width,scope.canvas1.height)
-ctx.fillStyle = 'red'
-ctx.fillRect(0,0,20,height)
+
+ctx.fillStyle = 'blue'
+if(state === 'fast') {
+    ctx.fillStyle = 'red'
+}
+ctx.beginPath()
+ctx.arc(x,y, 20,   0,2*Math.PI)
+ctx.fill()
 
 `
     },
@@ -43,14 +59,15 @@ ctx.fillRect(0,0,20,height)
         },
         id:genId("format"),
         type:'function',
-        name:'format',
+        name:'clearCanvas',
         params: [
-            {
-                type:'number',
-                name:'value'
-            }
         ],
-        body: `return value.toFixed(2)`
+        body: `
+        console.log("clearing")
+const ctx = scope.canvas1.getContext('2d')
+ctx.fillStyle = 'white'
+ctx.fillRect(0,0,scope.canvas1.width,scope.canvas1.height)
+`
     },
     {
         position: {
@@ -62,13 +79,13 @@ ctx.fillRect(0,0,20,height)
         target:fibId,
         tests: [
             {
-                params:[50],
+                params:[50,50,'normal'],
                 answer:[],
                 actual:[],
                 correct:true,
             },
             {
-                params:[100],
+                params:[60,60,'fast'],
                 answer:[],
                 actual:[],
                 correct:true,
