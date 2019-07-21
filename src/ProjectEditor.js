@@ -26,6 +26,11 @@ export class ProjectEditor {
         this.fireChange()
     }
 
+    setCanvasRef(fun, node) {
+        fun.canvasRef = node
+    }
+
+
     fireChange() {
         this.listeners.changed.forEach(cb => cb(this.project))
     }
@@ -55,6 +60,21 @@ export class ProjectEditor {
             name:'newFunName',
             params: [],
             body: `console.log("running");`
+        })
+        this.fireChange()
+    }
+
+    addNewCanvasConstant() {
+        this.project.push({
+            position: {
+                x:100,
+                y:100,
+            },
+            id:genId("canvas"),
+            type:'canvas',
+            name:'canvas1',
+            width:100,
+            height:100,
         })
         this.fireChange()
     }

@@ -24,6 +24,7 @@ body {
   width: 300px;
   height: 300px;
   position: absolute;
+  background-color: white;
 }
 
 .function {
@@ -185,4 +186,10 @@ footer {
 }
 .comment .body {
   padding: 0.25em;
+}
+
+
+
+.canvas canvas {
+  border: 1px solid red;
 }

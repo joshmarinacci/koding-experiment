@@ -15,6 +15,8 @@ export class ProcessorSystem {
         consts.forEach(c => {
             defs.push({name:c.name, value:c.value})
         })
+
+
         funs.forEach(realfun => {
             const parms = realfun.params.map(p => p.name)
             console.log("looking at realfun",realfun)
@@ -32,6 +34,10 @@ return scope;
 
         console.log(`-------\n${body}\n---------`)
         const scope = new Function(body)()
+        const canvases = this.project.filter(p => p.type === 'canvas')
+        canvases.forEach(c => {
+            scope[c.name] = c.canvasRef
+        })
         console.log(scope)
         return scope
     }

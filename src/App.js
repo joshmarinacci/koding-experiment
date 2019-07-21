@@ -8,6 +8,7 @@ import {ProcessorSystem} from './CodeProcessor'
 import {ConstantsView} from './ConstantsView'
 import {ProjectEditor} from './ProjectEditor'
 import {genId} from './utils'
+import {CanvasView} from './CanvasView'
 
 const fibId = genId("fib")
 
@@ -27,14 +28,12 @@ const project = [
             }
         ],//d = 1/2 at^2,  d/a * 2 = t^2,  sqrt(2d/a)
         body: `
-const time = 
- Math.sqrt(2*height/
-   scope.gravity)
-        
-return scope.firstname 
-    + " will fall for "
-    + scope.format(time)
-    + " seconds";
+const ctx = scope.canvas1.getContext('2d')
+ctx.fillStyle = 'white'
+ctx.fillRect(0,0,scope.canvas1.width,scope.canvas1.height)
+ctx.fillStyle = 'red'
+ctx.fillRect(0,0,20,height)
+
 `
     },
     {
@@ -63,13 +62,13 @@ return scope.firstname
         target:fibId,
         tests: [
             {
-                params:[1],
+                params:[50],
                 answer:[],
                 actual:[],
                 correct:true,
             },
             {
-                params:[2],
+                params:[100],
                 answer:[],
                 actual:[],
                 correct:true,
@@ -111,13 +110,26 @@ return scope.firstname
             This is a comment used for general documentation. It is associated
             with a function, but is not included in compiled code.
         `
-    }
+    },
 ]
+
+project.push({
+    position: {
+        x:700,
+        y:40,
+    },
+    id:genId("canvas"),
+    type:'canvas',
+    name:'canvas1',
+    width:100,
+    height:100,
+})
+
 
 const Processor = new ProcessorSystem(project)
 const ed = new ProjectEditor(project)
 
-const CanvasView = (props) => {
+const BackgroundCanvas = (props) => {
     return <div className={"canvas"}>{props.children}</div>
 }
 
@@ -126,6 +138,7 @@ const Menu = (props) => {
         <button>save</button>
         <button onClick={()=>ed.addNewFunction()}>new function</button>
         <button onClick={()=>ed.addNewComment()}>new comment</button>
+        <button onClick={()=>ed.addNewCanvasConstant()}>new canvas</button>
     </div>
 }
 
@@ -147,12 +160,12 @@ class App extends Component {
         const project = this.state.project
 
         return (
-            <CanvasView project={project}>
+            <BackgroundCanvas project={project}>
                 <Menu/>
                 {
                     project.map(p => this.renderChunk(p))
                 }
-            </CanvasView>
+            </BackgroundCanvas>
         )
     }
     renderChunk(p) {
@@ -160,6 +173,7 @@ class App extends Component {
         if(p.type === 'tests') return <TestsView fun={p} key={p.id} processor={Processor} editor={ed}/>
         if(p.type === 'constants') return <ConstantsView fun={p} key={p.id} editor={ed}/>
         if(p.type === 'comment') return <CommentDocView fun={p} key={p.id} editor={ed}/>
+        if(p.type === 'canvas') return <CanvasView fun={p} key={p.id} editor={ed}/>
 
     }
 
