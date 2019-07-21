@@ -44,8 +44,8 @@ return scope;
 
     processSingleTest(test,unit) {
         console.log("running",test)
-        const scope = this.generateCode()
         try {
+            const scope = this.generateCode()
             const fun = this.project.find(p => p.id === unit.target)
             console.log("run test",test,test.params)
             const res = scope[fun.name].apply(null, test.params)
@@ -60,9 +60,9 @@ return scope;
     }
 
     process(fun) {
-        const scope = this.generateCode()
-        const unit = this.project.find(p => p.id === fun.id)
         try {
+            const scope = this.generateCode()
+            const unit = this.project.find(p => p.id === fun.id)
             const realfun = this.project.find(p => p.id === unit.target)
             unit.tests.forEach(test => {
                 console.log("running test", test, test.params)

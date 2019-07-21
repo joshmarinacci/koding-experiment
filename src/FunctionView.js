@@ -8,7 +8,7 @@ export const FunView = ({fun,editor}) => {
     })
     return <DraggableWindow type="function" fun={fun} title={fun.name} editor={editor}>
         <div className="signature">
-            <span className="name">{fun.name}</span>
+            <EditableLabel fun={fun} editor={editor}>{fun.name}</EditableLabel>
             ({params})
         </div>
         {editable?<EditableBody fun={fun} editor={editor} onClick={()=>setEditing(false)}/>:<ViewOnlyBody fun={fun} onClick={()=>setEditing(true)}/>}
@@ -29,4 +29,25 @@ const EditableBody = ({fun, onClick,editor}) => {
             onClick()
         }}>done</button>
         </>
+}
+
+const EditableLabel = ({fun, editor}) => {
+    const [editing, setEditing] = useState(false)
+    const [value, setValue] = useState(fun.name)
+    if(editing) {
+        return <input
+            type="text"
+            value={value}
+            onChange={(e)=>setValue(e.target.value)}
+            onKeyDown={e=>{
+                if(e.key === 'Enter') {
+                    setEditing(false)
+                    editor.editFunctionName(fun,value)
+                }
+            }}
+        />
+    } else {
+        return <span className="name" onClick={()=>setEditing(true)}>{fun.name}</span>
+    }
+
 }
