@@ -139,6 +139,7 @@ const Menu = (props) => {
         <button onClick={()=>ed.addNewFunction()}>new function</button>
         <button onClick={()=>ed.addNewComment()}>new comment</button>
         <button onClick={()=>ed.addNewCanvasConstant()}>new canvas</button>
+        <button onClick={()=>ed.addNewTestPanel()}>new tests</button>
     </div>
 }
 

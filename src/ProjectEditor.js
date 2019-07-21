@@ -78,4 +78,25 @@ export class ProjectEditor {
         })
         this.fireChange()
     }
+
+    addNewTestPanel() {
+        this.project.push({
+            position: {
+                x: 100,
+                y: 100,
+            },
+            id:genId("tests"),
+            type:'tests',
+            target:null,
+            tests: [
+            {
+                params:[1],
+                answer:[2],
+                actual:[],
+                correct:true,
+            }
+        ]
+        })
+        this.fireChange()
+    }
 }
