@@ -30,6 +30,11 @@ export class ProjectEditor {
         fun.canvasRef = node
     }
 
+    updateFunctionBody(fun,body) {
+        fun.body = body
+        this.fireChange()
+    }
+
 
     fireChange() {
         this.listeners.changed.forEach(cb => cb(this.project))

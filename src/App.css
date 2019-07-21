@@ -32,6 +32,8 @@ body {
   left: 100px;
   top: 100px;
   background-color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .function .title {
@@ -64,6 +66,11 @@ body {
   font-family: monospace;
   font-size: 10pt;
   white-space: pre;
+  overflow: scroll;
+  flex:1.0;
+}
+.function textarea {
+  flex:1.0;
 }
 
 
